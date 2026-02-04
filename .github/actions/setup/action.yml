@@ -25,6 +25,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Setup Node.js 22 (required for Spago's node:sqlite)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
     - name: Setup Bun
       uses: oven-sh/setup-bun@v1
       with:

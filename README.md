@@ -7,7 +7,8 @@ Reusable GitHub Actions for PureScript Yoga packages.
 ### `setup` - Complete PureScript Yoga Stack Setup
 
 Sets up everything needed to build and test PureScript Yoga packages:
-- Bun (JavaScript runtime + fast package manager)
+- Node.js 22+ (required for Spago's `node:sqlite` dependency)
+- Bun (for fast package installation)
 - PureScript compiler
 - Spago package manager
 
@@ -101,9 +102,11 @@ jobs:
       - run: spago test
 ```
 
-## Why Bun?
+## Why Node 22 + Bun?
 
-Bun is a fast all-in-one JavaScript runtime that can run Spago 1.x (including its `node:sqlite` dependency) and provides incredibly fast package installation. No separate Node.js installation needed!
+**Node.js 22** is required because Spago 1.x uses the `node:sqlite` built-in module (only available in Node 22+). When you run `spago`, it executes with the system Node.js.
+
+**Bun** is used for incredibly fast npm package installation (`bun install` is much faster than `npm install`).
 
 ## License
 

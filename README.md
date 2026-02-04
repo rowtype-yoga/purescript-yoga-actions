@@ -7,10 +7,10 @@ Reusable GitHub Actions for PureScript Yoga packages.
 ### `setup` - Complete PureScript Yoga Stack Setup
 
 Sets up everything needed to build and test PureScript Yoga packages:
-- Node.js 22+ (required for Spago's `node:sqlite` dependency)
-- Bun (for fast package installation)
+- Bun (JavaScript runtime + fast package manager)
 - PureScript compiler
-- Spago package manager
+
+**Note**: Use `bunx spago` instead of `spago` in your workflows to run Spago with Bun's runtime.
 
 #### Usage
 
@@ -21,11 +21,9 @@ Sets up everything needed to build and test PureScript Yoga packages:
 #### With Custom Versions
 
 ```yaml
-- uses: rowtype-yoga/purescript-yoga-actions/setup@main
+- uses: rowtype-yoga/purescript-yoga-actions/.github/actions/setup@main
   with:
     purescript-version: '0.15.15'
-    spago-version: 'unstable'
-    node-version: '22'
     bun-version: 'latest'
     install-deps: 'true'
 ```
@@ -35,7 +33,6 @@ Sets up everything needed to build and test PureScript Yoga packages:
 | Input | Description | Default |
 |-------|-------------|---------|
 | `purescript-version` | PureScript compiler version | `0.15.15` |
-| `spago-version` | Spago version (`latest` or semver) | `latest` |
 | `bun-version` | Bun version | `latest` |
 | `install-deps` | Auto-run `bun install` | `true` |
 
@@ -69,9 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: rowtype-yoga/purescript-yoga-actions/setup@main
-      - run: spago build
-      - run: spago test
+      - uses: rowtype-yoga/purescript-yoga-actions/.github/actions/setup@main
+      - run: bunx spago build
+      - run: bunx spago test
 ```
 
 ### With Redis Service
@@ -98,15 +95,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: rowtype-yoga/purescript-yoga-actions/setup@main
-      - run: spago test
+      - uses: rowtype-yoga/purescript-yoga-actions/.github/actions/setup@main
+      - run: bunx spago test
 ```
 
-## Why Node 22 + Bun?
+## Why Bun?
 
-**Node.js 22** is required because Spago 1.x uses the `node:sqlite` built-in module (only available in Node 22+). When you run `spago`, it executes with the system Node.js.
-
-**Bun** is used for incredibly fast npm package installation (`bun install` is much faster than `npm install`).
+**Bun** is a fast all-in-one JavaScript runtime that:
+- Can run Spago 1.x (including its `node:sqlite` dependency) via `bunx`
+- Provides incredibly fast package installation
+- No separate Node.js installation needed!
 
 ## License
 

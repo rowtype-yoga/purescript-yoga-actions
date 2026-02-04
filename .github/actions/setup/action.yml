@@ -10,9 +10,9 @@ inputs:
     required: false
     default: '0.15.15'
   spago-version:
-    description: 'Spago version (semver, "latest", or "unstable")'
+    description: 'Spago version (semver or "latest")'
     required: false
-    default: 'unstable'
+    default: 'latest'
   bun-version:
     description: 'Bun version'
     required: false

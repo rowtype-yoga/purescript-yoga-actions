@@ -34,7 +34,7 @@ Sets up everything needed to build and test PureScript Yoga packages:
 | Input | Description | Default |
 |-------|-------------|---------|
 | `purescript-version` | PureScript compiler version | `0.15.15` |
-| `spago-version` | Spago version (`latest`, `unstable`, or semver) | `unstable` |
+| `spago-version` | Spago version (`latest` or semver) | `latest` |
 | `bun-version` | Bun version | `latest` |
 | `install-deps` | Auto-run `bun install` | `true` |
 

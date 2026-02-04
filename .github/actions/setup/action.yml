@@ -1,5 +1,5 @@
 name: 'Setup PureScript Yoga Stack'
-description: 'Complete setup for PureScript Yoga packages with Node 22, PureScript, Spago, and Bun'
+description: 'Complete setup for PureScript Yoga packages with Bun, PureScript, and Spago'
 branding:
   icon: 'package'
   color: 'purple'
@@ -13,12 +13,8 @@ inputs:
     description: 'Spago version (semver, "latest", or "unstable")'
     required: false
     default: 'unstable'
-  node-version:
-    description: 'Node.js version (required for Spago 1.x)'
-    required: false
-    default: '22'
   bun-version:
-    description: 'Bun version for fast npm installs'
+    description: 'Bun version'
     required: false
     default: 'latest'
   install-deps:
@@ -29,21 +25,18 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-
-    - name: Setup PureScript
-      uses: purescript-contrib/setup-purescript@main
-      with:
-        purescript: ${{ inputs.purescript-version }}
-        spago: ${{ inputs.spago-version }}
-
     - name: Setup Bun
       uses: oven-sh/setup-bun@v1
       with:
         bun-version: ${{ inputs.bun-version }}
+
+    - name: Install PureScript compiler
+      shell: bash
+      run: bun install --global purescript@${{ inputs.purescript-version }}
+
+    - name: Install Spago
+      shell: bash
+      run: bun install --global spago@${{ inputs.spago-version }}
 
     - name: Install dependencies
       if: inputs.install-deps == 'true'
